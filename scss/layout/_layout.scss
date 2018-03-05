@@ -1,0 +1,20 @@
+.container {
+  margin: 0 auto;
+  text-align: center;
+
+}
+
+.container::before,
+.container::after,
+.clearfix::before,
+.clearfix::after {
+  content: '';
+  display: table;
+}
+.container::after,
+.clearfix::after {
+  clear: both;
+}
+.wrapper {
+  overflow: hidden;
+}

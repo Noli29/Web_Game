@@ -1,0 +1,24 @@
+{
+  "name": "gulp_test",
+  "version": "1.0.0",
+  "description": "test project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gorior",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-connect": "^2.3.1",
+    "gulp-include": "^2.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^2.2.0"
+  },
+  "dependencies": {
+    "hamburgers": "^0.8.1",
+    "imagesloaded": "^4.1.1",
+    "masonry-layout": "^4.2.0"
+  }
+}
