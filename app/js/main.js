@@ -25,33 +25,40 @@ document.body.appendChild(app.view);
 //load an image and run the `setup` function when it's done
 
 loader
-    .add("../app/images/food.png")
+    .add("../app/images/all.json")
     .load(setup);
 
-//This `setup` function will run when the image has loaded
+var dungeon, human, carrot, id;
+
 function setup() {
 
-    //Create the `tileset` sprite from the texture
-    var texture = TextureCache["../app/images/food.png"];
+    //There are 3 ways to make sprites from textures atlas frames
 
-    //Create a rectangle object that defines the position and
-    //size of the sub-image you want to extract from the texture
-    //(`Rectangle` is an alias for `PIXI.Rectangle`)
-    var rectangle = new Rectangle(110, 110, 13, 13);
+    //1. Access the `TextureCache` directly
+    var dungeonTexture = TextureCache["dungeon.png"];
+    dungeon = new Sprite(dungeonTexture);
+    app.stage.addChild(dungeon);
 
-    //Tell the texture to use that rectangular section
-    texture.frame = rectangle;
+    //2. Access the texture using through the loader's `resources`:
+    human = new Sprite(
+        resources["../app/images/all.json"].textures["human.png"]
+    );
+    human.x = 68;
 
-    //Create the sprite from the texture
-    var rocket = new Sprite(texture);
+    //Center the explorer vertically
+    human.y = app.stage.height / 2 - human.height / 2;
+    app.stage.addChild(human);
 
-    //Position the rocket sprite on the canvas
-    rocket.x = 32;
-    rocket.y = 32;
+    //3. Create an optional alias called `id` for all the texture atlas
+    //frame id textures.
+    id = PIXI.loader.resources["../app/images/all.json"].textures;
 
-    //Add the rocket to the stage
-    app.stage.addChild(rocket);
+    //Make the treasure box using the alias
+    carrot = new Sprite(id["carrot.png"]);
+    app.stage.addChild(carrot);
 
-    //Render the stage
-    app.renderer.render(stage);
+    //Position the treasure next to the right edge of the canvas
+    carrot.x = app.stage.width - carrot.width - 48;
+    carrot.y = app.stage.height / 2 - carrot.height / 2;
+    app.stage.addChild(carrot);
 }
