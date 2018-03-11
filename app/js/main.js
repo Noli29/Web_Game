@@ -114,31 +114,41 @@ function setup() {
 function gameLoop(delta){
     state(delta);
 
-    var carrotX = carrot.vx;
-    var carrotY = carrot.vy;
+    carrot.vx = -1;
+    carrot.vy = 0;
 
-    for(carrotX = -1; carrotX <= 1.5; carrotX++ ){
-        for(carrotY = 1; carrotY <= 1.5; carrotY++) {
-            carrot.x += carrotX;
-            carrot.y += carrotY;
-            if((carrotX = 1.5)&&(carrotY = 1.5)){
-                carrot.vy = -1;
-                carrot.vx = 1;
-                console.log("test");
-            }else {
-                console.log("no");
-            }
-        }
-    }
+    carrot.x += carrot.vx;
+    carrot.y += carrot.vy;
+
+    // for(carrotX = -1; carrotX <= 1.5; carrotX++ ){
+    //     for(carrotY = 1; carrotY <= 1.5; carrotY++) {
+    //         carrot.x += carrotX;
+    //         carrot.y += carrotY;
+    //         if((carrotX = 1.5)&&(carrotY = 1.5)){
+    //             carrot.vy = -1;
+    //             carrot.vx = 1;
+    //             console.log("test");
+    //         }else {
+    //             console.log("no");
+    //         }
+    //     }
+    // }
 }
 
 function play(delta) {
     human.x += human.vx;
-    human.y += human.vy
+    human.y += human.vy;
 
 
     if (hitTestRectangle(human, carrot)) {
         carrot.tint = 0xccff99;
+        for(var text = 0;text<=10 ; text++){
+            if(text == 10) {
+                console.log(text);
+            }else{
+                console.log("game over");
+            }
+        }
     } else {
         carrot.tint = 0xff3300;
     }
