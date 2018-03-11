@@ -3,7 +3,8 @@ var Application = PIXI.Application,
     TextureCache = PIXI.utils.TextureCache,
     resources = PIXI.loader.resources,
     Sprite = PIXI.Sprite,
-    Text = PIXI.Text;
+    Text = PIXI.Text,
+    TextStyle = PIXI.TextStyle;
 
 var app = new Application({
         antialias: true,
@@ -23,7 +24,7 @@ loader
     .add("../app/images/all.json")
     .load(setup);
 
-var dungeon, human, carrot, id, state;
+var dungeon, human, carrot, apple, blueberries, cake, cheese, grapes, lemon, orange, pineapple, raspberry, strawberry, watermelon, id, state, message;
 
 function setup() {
     var dungeonTexture = TextureCache["dungeon.png"];
@@ -33,19 +34,98 @@ function setup() {
     id = PIXI.loader.resources["../app/images/all.json"].textures;
 
     carrot = new Sprite(id["carrot.png"]);
-
     carrot.vx = 0;
     carrot.vy = 0;
-
     carrot.x = app.stage.width - carrot.width - 650;
     carrot.y = app.stage.height / 6 - carrot.height / 6;
-
     app.stage.addChild(carrot);
+
+    apple = new Sprite(id["apple.png"]);
+    apple.vx = 0;
+    apple.vy = 0;
+    apple.x = app.stage.width - apple.width - 650;
+    apple.y = app.stage.height / 2 - apple.height / 2;
+    app.stage.addChild(apple);
+
+    blueberries = new Sprite(id["blueberries.png"]);
+    blueberries.vx = 0;
+    blueberries.vy = 0;
+    blueberries.x = app.stage.width - blueberries.width - 450;
+    blueberries.y = app.stage.height / 2 - blueberries.height / 4;
+    app.stage.addChild(blueberries);
+
+    cake = new Sprite(id["cake.png"]);
+    cake.vx = 0;
+    cake.vy = 0;
+    cake.x = app.stage.width - cake.width - 850;
+    cake.y = app.stage.height / 2 - cake.height / 6;
+    app.stage.addChild(cake);
+
+
+    cheese = new Sprite(id["cheese.png"]);
+    cheese.vx = 0;
+    cheese.vy = 0;
+    cheese.x = app.stage.width - cheese.width - 850;
+    cheese.y = app.stage.height / 6 - cheese.height / 6;
+    app.stage.addChild(cheese);
+
+
+    grapes = new Sprite(id["grapes.png"]);
+    grapes.vx = 0;
+    grapes.vy = 0;
+    grapes.x = app.stage.width - grapes.width - 50;
+    grapes.y = app.stage.height / 2 - grapes.height / 2;
+    app.stage.addChild(grapes);
+
+
+    lemon = new Sprite(id["lemon.png"]);
+    lemon.vx = 0;
+    lemon.vy = 0;
+    lemon.x = app.stage.width - lemon.width - 150;
+    lemon.y = app.stage.height / 1 - lemon.height / 1;
+    app.stage.addChild(lemon);
+
+
+    orange = new Sprite(id["orange.png"]);
+    orange.vx = 0;
+    orange.vy = 0;
+    orange.x = app.stage.width - orange.width - 350;
+    orange.y = app.stage.height / 4 - orange.height / 4;
+    app.stage.addChild(orange);
+
+    pineapple = new Sprite(id["pineapple.png"]);
+    pineapple.vx = 0;
+    pineapple.vy = 0;
+    pineapple.x = app.stage.width - pineapple.width - 950;
+    pineapple.y = app.stage.height / 1 - pineapple.height / 1;
+    app.stage.addChild(pineapple);
+
+    raspberry = new Sprite(id["raspberry.png"]);
+    raspberry.vx = 0;
+    raspberry.vy = 0;
+    raspberry.x = app.stage.width - raspberry.width - 1050;
+    raspberry.y = app.stage.height / 6 - raspberry.height / 6;
+    app.stage.addChild(raspberry);
+
+    strawberry = new Sprite(id["strawberry.png"]);
+    strawberry.vx = 0;
+    strawberry.vy = 0;
+    strawberry.x = app.stage.width - strawberry.width - 1050;
+    strawberry.y = app.stage.height / 1 - strawberry.height / 1;
+    app.stage.addChild(strawberry);
+
+
+    watermelon = new Sprite(id["watermelon.png"]);
+    watermelon.vx = 0;
+    watermelon.vy = 0;
+    watermelon.x = app.stage.width - lemon.width - 150;
+    watermelon.y = app.stage.height / 6 - lemon.height / 16;
+    app.stage.addChild(watermelon);
 
     human = new Sprite(
         resources["../app/images/all.json"].textures["human.png"]
     );
-    //human.x = 68;
+
     human.y = 96;
     human.vx = 0;
     human.vy = 0;
@@ -104,6 +184,16 @@ function setup() {
         }
     };
 
+
+    var style = new TextStyle({
+        fontFamily: "sans-serif",
+        fontSize: 18,
+        fill: "white",
+    });
+    message = new Text("...", style);
+    message.position.set(8, 8);
+    app.stage.addChild(message);
+
     state = play;
     app.ticker.add(delta => gameLoop(delta));
 }
@@ -114,25 +204,51 @@ function setup() {
 function gameLoop(delta){
     state(delta);
 
-    carrot.vx = -1;
-    carrot.vy = 0;
-
+    carrot.vx = -0.5;
+    carrot.vy = 0.5;
     carrot.x += carrot.vx;
     carrot.y += carrot.vy;
 
-    // for(carrotX = -1; carrotX <= 1.5; carrotX++ ){
-    //     for(carrotY = 1; carrotY <= 1.5; carrotY++) {
-    //         carrot.x += carrotX;
-    //         carrot.y += carrotY;
-    //         if((carrotX = 1.5)&&(carrotY = 1.5)){
-    //             carrot.vy = -1;
-    //             carrot.vx = 1;
-    //             console.log("test");
-    //         }else {
-    //             console.log("no");
-    //         }
-    //     }
-    // }
+    apple.vx = 0.5;
+    apple.vy = 0.5;
+    apple.x += apple.vx;
+    apple.y += apple.vy;
+
+    blueberries.vx = -0.5;
+    blueberries.vy = -0.5;
+    blueberries.x += blueberries.vx;
+    blueberries.y += blueberries.vy;
+
+    cake.vx = 1;
+    cake.vy = 0.5;
+    cake.x += cake.vx;
+    cake.y += cake.vy;
+
+    cheese.vx = 1;
+    cheese.vy = 1;
+    cheese.x += cheese.vx;
+    cheese.y += cheese.vy;
+
+    grapes.vx = -0.5;
+    grapes.vy = -0.5;
+    grapes.x += grapes.vx;
+    grapes.y += grapes.vy;
+
+    lemon.vx = 0.5;
+    lemon.vy = -1;
+    lemon.x += lemon.vx;
+    lemon.y += lemon.vy;
+
+    orange.vx = -1;
+    orange.vy = -1;
+    orange.x += orange.vx;
+    orange.y += orange.vy;
+
+    pineapple.vx = 0.5;
+    pineapple.vy = 1;
+    pineapple.x += pineapple.vx;
+    pineapple.y += pineapple.vy;
+
 }
 
 function play(delta) {
@@ -141,16 +257,135 @@ function play(delta) {
 
 
     if (hitTestRectangle(human, carrot)) {
-        carrot.tint = 0xccff99;
-        for(var text = 0;text<=10 ; text++){
-            if(text == 10) {
-                console.log(text);
+        carrot.tint = 0xff3300;
+        for(var text = 0; text <=1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
             }else{
-                console.log("game over");
+                message.text == "";
             }
         }
     } else {
-        carrot.tint = 0xff3300;
+        carrot.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, apple)) {
+        apple.tint = 0xff3300;
+        for(var text = 0; text <=1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        apple.tint = 0xccff99;
+    }
+
+    if (hitTestRectangle(human, blueberries)) {
+        blueberries.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        blueberries.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, cake)) {
+        cake.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        cake.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, grapes)) {
+        grapes.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        grapes.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, lemon)) {
+        lemon.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        lemon.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, raspberry)) {
+        raspberry.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        raspberry.tint = 0xccff99;
+    }
+
+
+    if (hitTestRectangle(human, watermelon)) {
+        watermelon.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        watermelon.tint = 0xccff99;
+    }
+
+    if (hitTestRectangle(human, cheese)) {
+        cheese.tint = 0xff3300;
+        for(var text = 0; text <= 1; text++){
+            message.text = text;
+            if(message.text == 100) {
+                message.text = "game over";
+            }else{
+                message.text == "";
+            }
+        }
+    } else {
+        cheese.tint = 0xccff99;
     }
 }
 
